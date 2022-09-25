@@ -4,7 +4,8 @@ import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth, storage, db } from "../firebase";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { doc, setDoc } from "firebase/firestore";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -16,6 +17,16 @@ const Register = () => {
     const password = e.target[2].value;
     const confirmPassword = e.target[3].value;
     const file = e.target[4].files[0];
+
+    if (password !== confirmPassword) {
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "Pasword Does Not Match",
+        footer: "This website is under devlopment may have some issue",
+      });
+      return;
+    }
 
     try {
       const res = await createUserWithEmailAndPassword(auth, email, password);
@@ -66,7 +77,9 @@ const Register = () => {
             </label>
             <button>Register</button>
             {err && <span>Something Went Wrong</span>}
-            <p>You do have account ? Login</p>
+            <p>
+              You do have account ? <Link to="/login">Login</Link>
+            </p>
           </form>
         </div>
       </div>
