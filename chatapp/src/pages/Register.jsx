@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import InsertPhotoRoundedIcon from "@mui/icons-material/InsertPhotoRounded";
 
 const Register = () => {
   const [name, setName] = useState("");
@@ -11,7 +11,6 @@ const Register = () => {
     <>
       <div className="formContainer">
         <div className="formWrapper">
-          <span className="logo">Eureka Chat</span>
           <span className="logo">Register</span>
           <form>
             <input type="text" placeholder="Please Enter your name" />
@@ -20,7 +19,8 @@ const Register = () => {
             <input type="text" placeholder="Confirm Password" />
             <input style={{ display: "none" }} type="file" id="file" />
             <label htmlFor="file">
-              <FontAwesomeIcon icon={faImage} />
+              <InsertPhotoRoundedIcon />
+              <span>Upload Profile Image</span>
             </label>
             <button>Register</button>
             <p>You do have account ? Login</p>
