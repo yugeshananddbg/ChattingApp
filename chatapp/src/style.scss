@@ -21,7 +21,31 @@
         form{
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 5px;
+            input{
+                padding: 10px;
+                border: none;
+                width: 200px;   
+                
+                border-bottom: 1px solid #a7bcff;
+                &::placeholder{
+                    color: rgba(175,175,175,0.9);
+                }
+            }
+            button{
+                background-color: #7b96ec;
+                color: white;
+                padding: 10px;
+                font-weight: bold;
+                cursor: pointer;
+                border: none;
+                border-radius: 5px;
+            }
+            p{
+                color: #5d5b8d;
+                font-size: 12px;
+                margin-top: 10px;
+            }
         }
     }
 }
