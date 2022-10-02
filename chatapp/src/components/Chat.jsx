@@ -1,14 +1,17 @@
-import React from "react";
+import React, { useContext } from "react";
 import VideocamRoundedIcon from "@mui/icons-material/VideocamRounded";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import Messages from "./Messages";
-import Input from "./Input"
+import Input from "./Input";
+import { ChatContext } from "../context/ChatContext";
 const Chat = () => {
+  const { data } = useContext(ChatContext);
+
   return (
     <div className="chat">
       <div className="chatInfo">
-        <span>Yugesh Anand</span>
+        <span>{data.user.displayName}</span>
         <div className="chatIcons">
           <VideocamRoundedIcon className="icon" />
           <PersonAddIcon className="icon" />
@@ -16,7 +19,7 @@ const Chat = () => {
         </div>
       </div>
       <Messages />
-      <Input/>
+      <Input />
     </div>
   );
 };

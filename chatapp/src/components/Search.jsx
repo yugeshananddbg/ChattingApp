@@ -49,7 +49,7 @@ const Search = () => {
 
     try {
       const res = await getDoc(doc(db, "chats", combineId));
-      console.log("Chat resp", res);
+      
       if (!res.exists()) {
         await setDoc(doc(db, "chats", combineId), { messages: [] });
 
