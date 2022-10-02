@@ -23,8 +23,9 @@ const Input = () => {
   const { data } = useContext(ChatContext);
   const handleSend = async (e) => {
     e.preventDefault();
-    setImg(null);
-    setText("");
+    if (!text || !img) {
+      return;  
+    }
     if (img) {
       const storageRef = ref(storage, uuid());
       const uploadTask = uploadBytesResumable(storageRef, img);
@@ -56,6 +57,8 @@ const Input = () => {
           date: Timestamp.now(),
         }),
       });
+      setImg(null);
+      setText("");
     }
 
     await updateDoc(doc(db, "userChats", currentUser.uid), {

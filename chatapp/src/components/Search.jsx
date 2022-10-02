@@ -12,7 +12,7 @@ import {
 } from "firebase/firestore";
 import { db } from "../firebase";
 import { AuthContext } from "../context/AuthContext";
-
+import { ChatContext } from "../context/ChatContext";
 import Swal from "sweetalert2";
 
 const Search = () => {
@@ -20,6 +20,7 @@ const Search = () => {
   const [err, setErr] = useState(false);
   const [user, setUser] = useState(null);
   const { currentUser } = useContext(AuthContext);
+  const { dispatch } = useContext(ChatContext);
 
   const handleSearch = async () => {
     const q = query(
@@ -41,15 +42,17 @@ const Search = () => {
     e.code === "Enter" && handleSearch();
   };
 
-  const handleSelect = async () => {
+  const handleSelect = async (u) => {
     const combineId =
       currentUser.uid > user.uid
         ? currentUser.uid + user.uid
         : user.uid + currentUser.uid;
 
+    dispatch({ type: "CHANGE_USER", payload: u });
+
     try {
       const res = await getDoc(doc(db, "chats", combineId));
-      
+
       if (!res.exists()) {
         await setDoc(doc(db, "chats", combineId), { messages: [] });
 
@@ -100,7 +103,7 @@ const Search = () => {
       </div>
       {/* {err && <span>User Not found</span>} */}
       {user && (
-        <div className="userChat" onClick={handleSelect}>
+        <div className="userChat" onClick={() => handleSelect(user)}>
           <img src={user.photoURL} alt="" />
           <div className="userChatInfo">
             <span>{user.displayName}</span>
