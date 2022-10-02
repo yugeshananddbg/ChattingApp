@@ -90,6 +90,7 @@ const Search = () => {
     setUserName("");
     setUser(null);
   };
+  console.log(err)
   return (
     <div className="search">
       <div className="searchForm">

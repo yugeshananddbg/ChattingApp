@@ -3,14 +3,13 @@ import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
 import AttachFileIcon from "@mui/icons-material/AttachFile";
 import { AuthContext } from "../context/AuthContext";
 import { ChatContext } from "../context/ChatContext";
-import { async } from "@firebase/util";
+
 import { db, storage } from "../firebase";
 import {
   arrayUnion,
   Timestamp,
   updateDoc,
   doc,
-  setDoc,
   serverTimestamp,
 } from "firebase/firestore";
 import { getDownloadURL, uploadBytesResumable, ref } from "firebase/storage";
@@ -21,11 +20,10 @@ const Input = () => {
   const [img, setImg] = useState(null);
   const { currentUser } = useContext(AuthContext);
   const { data } = useContext(ChatContext);
+
   const handleSend = async (e) => {
     e.preventDefault();
-    if (!text || !img) {
-      return;  
-    }
+
     if (img) {
       const storageRef = ref(storage, uuid());
       const uploadTask = uploadBytesResumable(storageRef, img);
@@ -57,8 +55,6 @@ const Input = () => {
           date: Timestamp.now(),
         }),
       });
-      setImg(null);
-      setText("");
     }
 
     await updateDoc(doc(db, "userChats", currentUser.uid), {
@@ -87,7 +83,6 @@ const Input = () => {
           type="file"
           id="img"
           style={{ display: "none" }}
-          value={img}
           onChange={(e) => setImg(e.target.files[0])}
         />
         <label htmlFor="img">
